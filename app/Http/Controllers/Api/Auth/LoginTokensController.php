@@ -30,12 +30,12 @@ class LoginTokensController extends LoginController
 
     public function logout(Request $request): JsonResponse {
         $request->user()->tokens()->delete();
-        return response()->json(['message' => 'Sessão encerrada, realizado logout.']);
+        return response()->json(['message' => 'Todas as sessões foram encerradas, realizado logout.']);
     }
-    
+
     public function revoke(Request $request): JsonResponse {
         $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Sessão encerrada, Token Revogado.']);
+        return response()->json(['message' => 'Sessão atual encerrada, Token Revogado.']);
     }
 
 }
