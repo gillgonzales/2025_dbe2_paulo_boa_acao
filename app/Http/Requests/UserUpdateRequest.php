@@ -24,10 +24,10 @@ class UserUpdateRequest extends FormRequest
     {
         $userId = $this->route('user');
 
-        return [
-            'name'      => ' required | string | max:50 | min:3',
-            'email'     => [' required', 'email', Rule::unique('users')->ignore($userId)],
-            'password'  => ' required | string | min:8',
+        return [//Em atualizações não aplicamos require para não obrigar a alteração.
+            'name'      => ' sometimes | string | max:50 | min:3',
+            'email'     => [' sometimes', 'email', Rule::unique('users')->ignore($userId)],
+            'password'  => ' sometimes | string | min:8',
         ];
     }
 }
