@@ -22,7 +22,7 @@ class CategoriaStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "sigla" => "required | max: 3",
+            "sigla" => "required | max: 3 | string | unique:categorias,sigla",
             "nome" => "required | max: 20"
         ];
     }
