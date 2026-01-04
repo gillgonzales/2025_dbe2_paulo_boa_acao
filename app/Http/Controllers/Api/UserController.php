@@ -48,7 +48,7 @@ class UserController extends Controller
                 throw new Exception("Não autorizado.");
             }
             // if(($request->user()->id != $user->id) && (!$request->user()->is_admin && !$request->user()->is_donor))
-                
+
             // return new UserResource($user);
         } catch(Exception $error) {
             return $this->errorHandler('Erro ao consultar usuário - Sem permissão',$error, 403);
@@ -61,7 +61,7 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user)
     {
         try {
-            if ($request->user()->id == $user->id) {
+            if ($request->user()->id == $user->id) {//Isso nunca vai acontecer se o user não é is-donor
                 $user->update($request->validated());
                 return new UserUpdatedResource($user);
             } else if ($request->user()->is_admin) {
