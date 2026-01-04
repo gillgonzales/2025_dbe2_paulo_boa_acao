@@ -1,11 +1,12 @@
+name: "202502_dbe2_paulo_boa_acao"
 services:
     laravel.test:
         build:
-            context: './vendor/laravel/sail/runtimes/8.5'
+            context: ./vendor/laravel/sail/runtimes/8.4
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: 'sail-8.5/app'
+        image: sail-8.4/app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -24,7 +25,7 @@ services:
         depends_on:
             - pgsql
     pgsql:
-        image: 'postgres:18-alpine'
+        image: 'postgres:15'
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
         environment:
@@ -33,17 +34,14 @@ services:
             POSTGRES_USER: '${DB_USERNAME}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
         volumes:
-            - 'sail-pgsql:/var/lib/postgresql'
-            - './vendor/laravel/sail/database/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
+            - 'sail-pgsql:/var/lib/postgresql/data'
+            - './vendor/laravel/sail/database/postgresql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
         networks:
             - sail
         healthcheck:
             test:
                 - CMD
                 - pg_isready
-                - '-q'
-                - '-d'
-                - '${DB_DATABASE}'
                 - '-U'
                 - '${DB_USERNAME}'
             retries: 3
