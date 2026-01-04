@@ -1,11 +1,12 @@
+name: "202502_dbe2_paulo_boa_acao"
 services:
     laravel.test:
         build:
-            context: './vendor/laravel/sail/runtimes/8.4'
+            context: ./vendor/laravel/sail/runtimes/8.4
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: 'sail-8.4/app'
+        image: sail-8.4/app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -26,19 +27,23 @@ services:
     pgsql:
         image: 'postgres:15'
         ports:
-            - '${FORWARD_DB_PORT:-5432}:5432' # <-- Porta padrão do Postgres é 5432
+            - '${FORWARD_DB_PORT:-5432}:5432'
         environment:
             PGPASSWORD: '${DB_PASSWORD:-secret}'
             POSTGRES_DB: '${DB_DATABASE}'
             POSTGRES_USER: '${DB_USERNAME}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
         volumes:
-            - 'sail-pgsql:/var/lib/postgresql/data' # <-- Novo volume para os dados do Postgres
+            - 'sail-pgsql:/var/lib/postgresql/data'
             - './vendor/laravel/sail/database/postgresql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
         networks:
             - sail
         healthcheck:
-            test: ["CMD", "pg_isready", "-U", "${DB_USERNAME}"] # <-- Healthcheck específico para Postgres
+            test:
+                - CMD
+                - pg_isready
+                - '-U'
+                - '${DB_USERNAME}'
             retries: 3
             timeout: 5s
 networks:
