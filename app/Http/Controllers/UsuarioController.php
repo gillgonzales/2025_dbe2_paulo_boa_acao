@@ -48,8 +48,9 @@ class UsuarioController extends Controller
     }
 
     public function delete($id) {
+        //Deveria redirecionar para um formulário de confirmação
         if(Usuario::find($id)->delete()){
-            return redirect('/usuarios'); 
+            return redirect('/usuarios');
         } else {
             dd("Erro ao excluir usuário $id");
         }

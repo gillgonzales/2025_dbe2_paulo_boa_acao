@@ -26,6 +26,8 @@ Route::get('/produto', [ProdutoController::class, 'create']);
 Route::post('/produto', [ProdutoController::class, 'store']);
 Route::get('/produto/{id}/edit',[ProdutoController::class, 'edit'])->name('edit');
 Route::post('/produto/{id}/update', [ProdutoController::class, 'update'])->name('update');
+//Método delete deveria ser acessado via POST, GET é inseguro demais.
+//Proteger com uma rota de confirmação utilizando POST para todas as operações de delete
 Route::get('/produto/{id}/delete', [ProdutoController::class, 'delete'])->name('delete');
 
 Route::get('/usuarios', [UsuarioController::class, 'index']);
@@ -35,6 +37,7 @@ Route::post('/usuario', [UsuarioController::class, 'store'])->name('usuarios.sto
 Route::get('/usuarios/{id}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit');
 Route::post('/usuarios/{id}/update', [UsuarioController::class, 'update'])->name('usuarios.update');
 Route::get('/usuarios/{id}/delete', [UsuarioController::class, 'delete'])->name('usuarios.delete');
+
 
 Route::get('/itens', [ItemController::class, 'index'])->name('itens.index');
 Route::get('/item', [ItemController::class, 'create'])->name('itens.create');
