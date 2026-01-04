@@ -23,9 +23,9 @@ class UsuarioStoreRequest extends FormRequest
     {
         return [
             "nome" => "required",
-            "email" => "required",
+            "email" => "required | email | unique:usuarios,email",
             "telefone" => "required | size: 11",
-            "cep" => "required | size: 8", 
+            "cep" => "required | size: 8",
             "endereco" => "required",
             "numero" => "nullable | numeric",
             "complemento" => "nullable",
